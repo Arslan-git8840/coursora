@@ -1,0 +1,1 @@
+ALTER TABLE "courseLayout" ALTER COLUMN "id" SET DEFAULT 'df749980-ce0a-4b29-ac7f-88bcb6c9e828';

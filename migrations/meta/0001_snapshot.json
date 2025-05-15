@@ -1,0 +1,87 @@
+{
+  "id": "c59a4f18-a30c-4ee9-a2af-390221062465",
+  "prevId": "f0823ef9-874f-45cf-83a2-909f1751b429",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.courseLayout": {
+      "name": "courseLayout",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "topic": {
+          "name": "topic",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "topic_description": {
+          "name": "topic_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "has_video": {
+          "name": "has_video",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "no_of_chapters": {
+          "name": "no_of_chapters",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chapters": {
+          "name": "chapters",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

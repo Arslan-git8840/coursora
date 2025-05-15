@@ -1,0 +1,88 @@
+{
+  "id": "d4aefa29-e565-4488-9b85-5c51660a1b82",
+  "prevId": "26115a4f-06a3-48b5-ad2a-73c92ba49c7c",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.courseLayout": {
+      "name": "courseLayout",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "'df749980-ce0a-4b29-ac7f-88bcb6c9e828'"
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "topic": {
+          "name": "topic",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "topic_description": {
+          "name": "topic_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "difficulty": {
+          "name": "difficulty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "has_video": {
+          "name": "has_video",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'no'"
+        },
+        "no_of_chapters": {
+          "name": "no_of_chapters",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chapters": {
+          "name": "chapters",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

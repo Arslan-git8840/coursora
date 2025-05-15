@@ -1,0 +1,1 @@
+ALTER TABLE "chapterLayout" RENAME TO "courseLayout";
