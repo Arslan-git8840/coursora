@@ -1,9 +1,12 @@
 import VideoPlayer from "@/components/course-view/videoPlayer";
+import { formatMiddlewareText } from "@/lib/formatText";
 import { Clock, BookOpen } from "lucide-react";
 
 
 const ChapterContent = ({ chapter }) => {
   console.log("videoId", chapter.videoId)
+  const formattedDescription = formatMiddlewareText(chapter.chapterContent.description);
+
   return (
     <div className="space-y-6">
       {/* Video Player */}
@@ -22,7 +25,10 @@ const ChapterContent = ({ chapter }) => {
         </div>
 
         <div className="prose prose-blue max-w-none">
-          <p className="text-gray-700">{chapter.chapterContent.description}</p>
+           <p
+            className="text-gray-700"
+            dangerouslySetInnerHTML={{ __html: formattedDescription }}
+          />
         </div>
       </div>
 
