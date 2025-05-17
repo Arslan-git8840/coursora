@@ -15,7 +15,7 @@ const satisfy = Satisfy({
 
 const HeroSection = () => {
   return (
-    <div className={`max-w-6xl mx-auto w-full py-16 px-4 text-white text-center ${satisfy.className}`}>
+    <div className={`max-w-6xl mx-auto w-full sm:py-14 md:py-16 py-8 px-2 text-white text-center ${satisfy.className}`}>
       <h1 className={`text-xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight drop-shadow-md ${kalam.className}`}>
         Turn Ideas into Impact — Instantly Create Smart AI Courses with Coursora ⚡️
       </h1>
@@ -33,8 +33,8 @@ const HeroSection = () => {
         </Button>
       </div>
       {/* Example placement */}
-      <section className="w-full bg-black text-white mt-12 py-20 px-6 md:px-16 rounded-xl">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-16">
+      <section className="w-full bg-black text-white sm:mt-12 mt-10 md:py-20 py-6 px-3 md:px-16 rounded-xl">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center md:gap-16 gap-6">
 
           {/* LEFT SIDE */}
           <div>
@@ -50,14 +50,14 @@ const HeroSection = () => {
               <div className="bg-gray-800 p-2 rounded-lg">🏛️</div>
               <div className="bg-gray-800 p-2 rounded-lg">📜</div>
               <div className="bg-gray-800 p-2 rounded-lg">🔭</div>
-              <div className="bg-gray-800 p-2 rounded-lg">⚖️</div>
-              <div className="bg-gray-800 p-2 rounded-lg">📚</div>
+              <div className="bg-gray-800 p-2 rounded-lg sm:block hidden">⚖️</div>
+              <div className="bg-gray-800 p-2 rounded-lg ">📚</div>
               <div className="bg-gray-800 p-2 rounded-lg">🌍</div>
             </div>
           </div>
 
           {/* RIGHT SIDE — Fake Course Card */}
-          <div className="bg-[#1c1c1c] text-white rounded-xl p-6 space-y-4 shadow-lg border border-gray-700">
+          <div className="bg-[#1c1c1c] text-white rounded-xl sm:px-6 sm:py-6 px-2 py-4 space-y-4 shadow-lg border border-gray-700">
             <div className="text-lg font-semibold">Course: The Rise and Legacy of the Babylonian Civilization</div>
 
             <div className="flex gap-4 text-sm text-gray-400">

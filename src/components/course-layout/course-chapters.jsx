@@ -129,7 +129,7 @@ export default function CourseChapters({ course, generateButton }) {
         <div>
             <h2 className="text-2xl font-bold mb-4">Chapters</h2>
             {course.chapters.map((chapter, idx) => (
-                <Card key={chapter.topic} className="mb-4">
+                <Card key={chapter.topic} className="sm:mb-4 mb-3">
                     <div className="p-5 flex items-start">
                         <div className="bg-[#0080FF] text-white rounded-full flex items-center justify-center h-10 w-10 flex-shrink-0 mr-4">
                             <span>{idx + 1}</span>

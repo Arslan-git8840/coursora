@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function CourseHeader({ course, startButton }) {
   return (
-    <Card className="p-6 mb-6">
+    <Card className="p-6 sm:mb-6 mb-4">
       <div className="grid md:grid-cols-2 gap-6">
         <div>
           <h1 className="text-2xl font-bold flex items-center capitalize">

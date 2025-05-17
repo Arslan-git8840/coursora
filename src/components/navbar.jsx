@@ -45,7 +45,6 @@ export function NavigationBar() {
                 Get Started
               </NavbarButton>
             </SignedOut>
-            {/* <NavbarButton variant="primary">Get Started</NavbarButton> */}
             <SignedIn>
               <UserButton />
             </SignedIn>
@@ -77,20 +76,14 @@ export function NavigationBar() {
               </Link>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="primary"
-                className="w-full"
-              >
-                Login
-              </NavbarButton>
-              <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="primary"
-                className="w-full"
-              >
-                Book a call
-              </NavbarButton>
+              <SignedOut>
+                <NavbarButton variant="primary">
+                  Get Started
+                </NavbarButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
             </div>
           </MobileNavMenu>
         </MobileNav>
