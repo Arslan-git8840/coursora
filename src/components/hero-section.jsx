@@ -33,8 +33,8 @@ const HeroSection = () => {
         </Button>
       </div>
       {/* Example placement */}
-      <section className="w-full bg-black text-white sm:mt-12 mt-10 md:py-20 py-6 px-3 md:px-16 rounded-xl">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center md:gap-16 gap-6">
+      <section className="w-full bg-black text-white sm:mt-12 mt-10 md:py-14 lg:py-20 py-6 px-3 lg:px-16 rounded-xl">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center md:gap-4 lg:gap-16 gap-6">
 
           {/* LEFT SIDE */}
           <div>
