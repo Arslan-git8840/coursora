@@ -188,7 +188,7 @@ export default function CourseChapters({ course, generateButton }) {
                     </div>
                 </Card>
             ))}
-            {generateButton === true && <div className="mt-8 flex justify-center">
+            {generateButton === true && <div className="sm:mt-8 mt-4 flex justify-center">
                 <Button
                     className="bg-[#0080FF] hover:bg-[#0080FF]/90 text-white px-6 py-3 rounded-md font-medium flex items-center gap-2"
                     onClick={generateChapterContent}

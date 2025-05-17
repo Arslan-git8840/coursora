@@ -46,11 +46,11 @@ const HeroSection = () => {
             </p>
 
             {/* Icon Row */}
-            <div className="flex gap-4 text-white text-xl mt-8">
+            <div className="flex justify-center gap-4 text-white text-xl mt-8">
               <div className="bg-gray-800 p-2 rounded-lg">🏛️</div>
               <div className="bg-gray-800 p-2 rounded-lg">📜</div>
               <div className="bg-gray-800 p-2 rounded-lg">🔭</div>
-              <div className="bg-gray-800 p-2 rounded-lg sm:block hidden">⚖️</div>
+              <div className="bg-gray-800 p-2 rounded-lg">⚖️</div>
               <div className="bg-gray-800 p-2 rounded-lg ">📚</div>
               <div className="bg-gray-800 p-2 rounded-lg">🌍</div>
             </div>

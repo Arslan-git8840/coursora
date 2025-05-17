@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 function FinishPage({ course }) {
     const [isCopied, setIsCopied] = useState(false)
 
-    const url = `http://localhost:3000/course/${course.id}`;
+    const url = `https://coursora.vercel.app/course/${course.id}`;
     const copyToClipboard = async () => {
         try {
             await navigator.clipboard.writeText(url);

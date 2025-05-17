@@ -318,7 +318,7 @@ const CourseForm = () => {
         </div>
       )}
 
-      <div className="flex justify-between mt-12">
+      <div className="flex justify-between sm:mt-12 mt-6">
         <Button
           variant="outline"
           onClick={handlePrevious}
@@ -338,7 +338,7 @@ const CourseForm = () => {
         ) : (
           <Button
             onClick={handleSubmit}
-            className="bg-[#9b87f5] hover:bg-[#6E59A5] text-white px-8"
+            className="bg-[#9b87f5] hover:bg-[#6E59A5] text-white px-4"
           >
             {loading && (
               <Loader2 className="h-5 w-5 animate-spin" />
