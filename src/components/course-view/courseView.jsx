@@ -32,7 +32,7 @@ const CourseView = ({ chapterList }) => {
           {/* Course Header */}
           <div className="mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <h1 className="text-2xl md:text-3xl font-bold text-course-blue-900">{chapterList[0].topic}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-[#ff7f50]">{chapterList[0].topic}</h1>
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 bg-course-blue-100 text-course-blue-800 rounded-full text-sm font-medium">
                   Chapter {activeChapter} of {chapterList.length}

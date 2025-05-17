@@ -1,29 +1,35 @@
-'use client'
-import React, { useEffect } from 'react'
-import YouTube from 'react-youtube'
+'use client';
+
+import React, { useEffect } from 'react';
+import YouTube from 'react-youtube';
 
 function VideoPlayer({ videoId }) {
-  console.log('videoPlayer', videoId)
+  useEffect(() => {
+    console.log('videoPlayer', videoId);
+  }, [videoId]);
+
   const opts = {
-    height: '390',
-    width: '640',
     playerVars: {
       autoplay: 0,
     },
   };
-  useEffect(() => {
-    console.log(videoId)
-  }, [videoId]);
 
   return (
-    <div>
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-      >
-      </YouTube>
-    </div>
-  )
+    // <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px]">
+    //   <div className="absolute top-0 left-0 w-full h-full">
+    //     <YouTube
+    //       videoId={videoId}
+    //       opts={{ ...opts, width: '100%', height: '100%' }}
+    //       className="w-full h-full"
+    //     />
+    //   </div>
+    // </div>
+    <YouTube
+      videoId={videoId}
+      opts={{ ...opts, width: '100%', height: '100%' }}
+      className="w-full h-full"
+    />
+  );
 }
 
-export default VideoPlayer
+export default VideoPlayer;

@@ -5,71 +5,124 @@ import { callAi } from "@/lib/gemini";
 import { useUser } from "@clerk/nextjs";
 import { generateVideo } from "@/lib/generateVideo";
 import { createChapterList, updateCourseLayout } from "@/lib/drizzleActions";
-
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { main } from "@/lib/geminiAi";
 export default function CourseChapters({ course, generateButton }) {
     const { user } = useUser();
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
+    function sanitizeJsonString(str) {
+        return str
+            .replace(/^```(?:json)?/, '')   // Remove starting ``` or ```json
+            .replace(/```$/, '')            // Remove ending ```
+            .trim()
+            .replace(/\\(?!["\\/bfnrtu])/g, '\\\\'); // Escape invalid backslashes
+    }
 
     const generateChapterContent = async () => {
-        const chapters = course.chapters;
-        chapters.forEach(async (chapter, idx) => {
-            const PROMPT = `
-You are a JSON generator bot.
+        try {
+            setLoading(true);
 
-Explain the concept in detail for:
-- Topic: ${course.topic}
-- Chapter: ${chapter.topic}
+            for (const chapter of course.chapters) {
+                //             const PROMPT = `
+                // You are a JSON generator bot.
 
-Return a *single JSON object* with exactly these fields:
-{
-  "title": "string",
-  "description": "string (plain text, no formatting or markdown)",
-  "CODEEXAMPLE": "string (valid HTML code as plain text, escape double quotes)"
-}
+                // Explain the concept in detail for:
+                // - Topic: ${course.topic}
+                // - Chapter: ${chapter.topic}
 
-Respond ONLY with this valid JSON object — no commentary or code block markdown.
-`;
+                // Return a *single JSON object* with exactly these fields and please don't add any blankspace in the keys of object (" description" not allowed blank spaces important!!!!!!!). ):
+                // {
+                //   "title": "string",
+                //   "description": "string (plain text, no formatting or markdown)",
+                //   "CODEEXAMPLE": "string (valid HTML code as plain text, escape double quotes like \\\" and all new lines with \\n. If it's not programming, return N/A)"
+                // }
 
-            // console.log('PROMPT', PROMPT);
-            if (PROMPT) {
-                try {
-                    // generate chapter content 
-                    const response = await callAi(PROMPT);
-                    // console.log(response.text);
-                    const res = response.text;
-                    const formattedObject = res.replace(/^```[\s]*json\s*/, '')
-                        .replace(/```$/, '')
-                        .trim();
-                    console.log("formattedObject", formattedObject);
-                    const parsedObject = JSON.parse(formattedObject);
-                    console.log(parsedObject);
+                // Respond ONLY with this valid JSON object — no commentary or code block markdown..
+                // `;
+                const PROMPT = `
+    You are an AI course generator.
+    I will give you:
+    - COURSENAME: ${course.topic}
+    - CHAPTERTOPIC: ${chapter.topic}
 
-                    // generate videoId
-                    const youtubeVideoId = await generateVideo(course.topic + ':' + chapter.topic)
-                    console.log(youtubeVideoId);
+    Return a JSON object with exactly two fields:
+    {
+      "title": string (the chapter topic),
+      "description": string (a detailed long theory about the chapter topic)
+      "CODEEXAMPLE": string (an HTML-formatted code example relevant to the chapter topic, or an empty string if none)
+    }
 
-                    // save into database
-                    const dbResponse = await createChapterList({
-                        iid: course.id,
-                        videoId: youtubeVideoId,
-                        chapterContent: parsedObject,
-                        userId: user.id,
-                        category: course.category,
-                        duration: chapter.duration,
-                        topic: course.topic
-                    })
+    Return the JSON ONLY without any additional text.
+  `;
 
-                    console.log("dbResponse for inserting chapterList", dbResponse);
-                    // updateCourseLayout in db
-                    const data = {
-                        courseId: dbResponse.courseId,
-                        userId: user.id
-                    }
-                    await updateCourseLayout(course.id, data);
-                } catch (error) {
-                    console.log(error);
-                }
+                // const response = await callAi(PROMPT);
+                // const res = response.text;
+
+                console.log(PROMPT);
+                const response = await main(PROMPT);
+                const res = response.text;
+                console.log(res);
+                const raw = response.text;
+                const cleaned = sanitizeJsonString(raw);
+                const parsed = JSON.parse(cleaned);
+                console.log(parsed);
+                console.log("parseddddddd", parsed);
+
+
+                // const formattedObject = res
+                //     .replace(/^```[\s]*json\s*/i, '')
+                //     .replace(/```$/, '')
+                //     .trim();
+
+                // let parsedObject;
+
+                // try {
+                //     parsedObject = JSON.parse(formattedObject);
+                // } catch (parseError) {
+                //     // Attempt to sanitize CODEEXAMPLE before parsing
+                //     const safeFormatted = formattedObject.replace(
+                //         /"CODEEXAMPLE":\s?"([\s\S]*?)"/,
+                //         (_, code) => {
+                //             const escaped = code
+                //                 .replace(/\\/g, "\\\\")
+                //                 .replace(/"/g, '\\"')
+                //                 .replace(/\n/g, "\\n");
+                //             return `"CODEEXAMPLE": "${escaped}"`;
+                //         }
+                //     );
+
+                //     parsedObject = JSON.parse(safeFormatted);
+                //     console.log(parsedObject);
+                // }
+
+                const youtubeVideoId = await generateVideo(`${course.topic}:${chapter.topic}`);
+
+                const dbResponse = await createChapterList({
+                    iid: course.id,
+                    videoId: youtubeVideoId,
+                    chapterContent: parsed, // parsedObject
+                    userId: user.id,
+                    category: course.category,
+                    duration: chapter.duration,
+                    topic: course.topic
+                });
+
+                await updateCourseLayout(course.id, {
+                    courseId: dbResponse.courseId,
+                    userId: user.id
+                });
             }
-        });
+
+            router.push(`/create-course/${course.id}/finish`);
+        } catch (error) {
+            console.error("Error generating chapter content:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -137,20 +190,16 @@ Respond ONLY with this valid JSON object — no commentary or code block markdow
             ))}
             {generateButton === true && <div className="mt-8 flex justify-center">
                 <Button
-                    className="bg-[#0080FF] hover:bg-[#0080FF]/90 text-white px-6 py-3 rounded-md font-medium"
+                    className="bg-[#0080FF] hover:bg-[#0080FF]/90 text-white px-6 py-3 rounded-md font-medium flex items-center gap-2"
                     onClick={generateChapterContent}
+                    disabled={loading}
                 >
-                    Generate Course Content
+                    {loading && (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                    )}
+                    {loading ? "Generating..." : "Generate Course Content"}
                 </Button>
             </div>}
-            {/* <div className="mt-8 flex justify-center">
-                <Button
-                    className="bg-[#0080FF] hover:bg-[#0080FF]/90 text-white px-6 py-3 rounded-md font-medium"
-                    onClick={generateChapterContent}
-                >
-                    Generate Course Content
-                </Button>
-            </div> */}
         </div>
     );
 }

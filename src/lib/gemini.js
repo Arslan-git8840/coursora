@@ -8,7 +8,7 @@ export async function callAi(promptTemplate) {
     });
 
     const config = {
-        responseMimeType: "text/plain",
+        responseMimeType: "application/json",
     };
 
     const model = "gemini-2.0-flash";
@@ -38,5 +38,8 @@ export async function callAi(promptTemplate) {
 
     return {
         text: text.join(" "),
+        only:text,
     };
 }
+
+

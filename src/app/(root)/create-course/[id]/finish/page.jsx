@@ -9,7 +9,7 @@ async function Page({ params }) {
     console.log(course);
     return (
         <div>
-            <FinishPage course={course[0]}/>
+            <FinishPage course={course[0]} />
         </div>
     )
 }

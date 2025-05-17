@@ -9,7 +9,7 @@ export default function CourseHeader({ course, startButton }) {
     <Card className="p-6 mb-6">
       <div className="grid md:grid-cols-2 gap-6">
         <div>
-          <h1 className="text-2xl font-bold flex items-center">
+          <h1 className="text-2xl font-bold flex items-center capitalize">
             {course.topic}
             <svg
               className="h-5 w-5 ml-2"

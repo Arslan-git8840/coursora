@@ -7,12 +7,14 @@ const ChapterContent = ({ chapter }) => {
   return (
     <div className="space-y-6">
       {/* Video Player */}
-      <VideoPlayer videoId={chapter.videoId} />
+      <div className="w-[100%] h-[320px]">
+        <VideoPlayer videoId={chapter.videoId} />
+      </div>
 
       {/* Chapter Info */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">{chapter.chapterContent.title}</h1>
+          <h1 className="text-2xl font-bold text-[#ff7f50]">{chapter.chapterContent.title}</h1>
           <div className="flex items-center gap-1 text-sm text-gray-500">
             <Clock className="h-4 w-4" />
             <span>{chapter.duration}</span>

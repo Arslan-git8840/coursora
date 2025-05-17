@@ -26,6 +26,8 @@ import { Nunito, } from 'next/font/google';
 import { callAi } from '@/lib/gemini';
 import { saveCourseLayout } from '@/lib/drizzleActions';
 import { useRouter } from 'next/navigation';
+import { Loader2 } from "lucide-react";
+import { main } from '@/lib/geminiAi';
 
 
 const steps = [
@@ -36,6 +38,7 @@ const steps = [
 
 const CourseForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     category: "",
@@ -77,31 +80,72 @@ const CourseForm = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     console.log("Form submitted with data:", formData);
     const id = crypto.randomUUID();
     console.log(id);
 
-    const prompt = process.env.NEXT_PUBLIC_GEMINI_PROMPT;
-    console.log('myprompt', prompt);
-    const promptTemplate = prompt
-      .replace("{category}", formData.category)
-      .replace("{topic}", formData.topic)
-      .replace("{description}", formData.description)
-      .replace("{difficultyLevel}", formData.difficulty)
-      .replace("{duration}", formData.duration)
-      .replace("{hasVideo}", formData.hasVideo ? "true" : "false")
-      .replace(/{noOfChapters}/g, formData.chapters);
-    console.log("promptTemplate", promptTemplate);
-    
-    const geminiResponse = await callAi(promptTemplate);
+    // const prompt = process.env.NEXT_PUBLIC_GEMINI_PROMPT;
+    // console.log('myprompt', prompt);
+    // const promptTemplate = prompt
+    //   .replace("{category}", formData.category)
+    //   .replace("{topic}", formData.topic)
+    //   .replace("{description}", formData.description)
+    //   .replace("{difficultyLevel}", formData.difficulty)
+    //   .replace("{duration}", formData.duration)
+    //   .replace("{hasVideo}", formData.hasVideo ? "true" : "false")
+    //   .replace(/{noOfChapters}/g, formData.chapters);
+    // console.log("promptTemplate", promptTemplate);
+
+    const prompt = `
+  You are an expert AI course generator. Based on the following inputs:
+
+  Category: ${formData.category}
+  Topic: ${formData.topic}
+  Course Description: ${formData.description}
+  Difficulty Level: ${formData.difficulty}
+  Total Course Duration: ${formData.duration}
+  Includes Video Lessons: ${formData.hasVideo ? "Yes" : "No"}
+  Number of Chapters: ${formData.chapters}
+
+  Return a course layout strictly in this format:
+
+  {
+    "topicDescription": "string",
+    "chapters": [
+      {
+        "topic": "string",
+        "description": "string",
+        "duration": number
+      }
+    ]
+  }
+
+  Important instructions:
+  - Do not use backticks.
+  - Do not use the word “json”.
+  - Do not include markdown formatting.
+  - Return only the pure JSON object above — nothing else.
+  - Always use double quotes around all keys and string values.
+`;
+    const resp = await main(prompt);
+    const raw = resp.text.trim();
+    const cleaned = raw
+      .replace(/^```(json)?/, '') 
+      .replace(/```$/, '')       
+      .trim();
+    const parsed = JSON.parse(cleaned);
+    console.log(parsed.chapters);
+    // const geminiResponse = await callAi(promptTemplate);
 
     const data = { category: formData.category, topic: formData.topic, duration: formData.duration, hasVideo: formData.hasVideo, difficulty: formData.difficulty, noOfChapters: formData.chapters, id: id };
 
-    console.log(geminiResponse.text);
+    // console.log(geminiResponse.text);
 
-    const res = await saveCourseLayout({ GeminiResponse: geminiResponse.text, data });
+    const res = await saveCourseLayout({ GeminiResponse: parsed, data });
 
     console.log(res.courseId);
+    setLoading(false);
     router.push(`/create-course/${res.courseId}`);
 
     setFormData({
@@ -296,7 +340,10 @@ const CourseForm = () => {
             onClick={handleSubmit}
             className="bg-[#9b87f5] hover:bg-[#6E59A5] text-white px-8"
           >
-            Generate Course Layout
+            {loading && (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            )}
+            {loading ? "Generating..." : "Generate Course Layout"}
           </Button>
         )}
       </div>

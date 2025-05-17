@@ -8,8 +8,7 @@ export default async function Page({ params }) {
   const res = await getChapterList(courseId);
   console.log(res);
   return (
-    <div>
-      
+    <div>  
       <CourseView chapterList={res} />
     </div>
   );

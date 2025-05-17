@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/resizable-navbar";
 import Link from "next/link";
 import { useState } from "react";
+import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export function NavigationBar() {
   const navItems = [
@@ -39,7 +40,15 @@ export function NavigationBar() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center">
-            <NavbarButton variant="primary">Get Started</NavbarButton>
+            <SignedOut>
+              <NavbarButton variant="primary">
+                Get Started
+              </NavbarButton>
+            </SignedOut>
+            {/* <NavbarButton variant="primary">Get Started</NavbarButton> */}
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </div>
         </NavBody>
 

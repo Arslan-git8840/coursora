@@ -6,8 +6,8 @@ import { eq } from "drizzle-orm";
 
 const saveCourseLayout = async ({ GeminiResponse, data }) => {
 
-    const sampleGeminiResponse = JSON.parse(GeminiResponse);
-    console.log(sampleGeminiResponse);
+    // const sampleGeminiResponse = JSON.parse(GeminiResponse);
+    // console.log(sampleGeminiResponse);
 
     try {
         // const parsed = geminiResponseSchema.parse(GeminiResponse);
@@ -15,12 +15,12 @@ const saveCourseLayout = async ({ GeminiResponse, data }) => {
         const response = await db.insert(courseLayout).values({
             category: data.category,
             topic: data.topic,
-            topicDescription: sampleGeminiResponse.topicDescription || "",
+            topicDescription: GeminiResponse.topicDescription || "",
             difficulty: data.difficulty,
             duration: data.duration,
             hasVideo: data.hasVideo,
             noOfChapters: data.noOfChapters,
-            chapters: sampleGeminiResponse.chapters || [],
+            chapters: GeminiResponse.chapters || [],
             id: data.id,
         }).returning({ id: courseLayout.id });
         const id = response[0].id;

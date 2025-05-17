@@ -6,7 +6,7 @@ export const generateVideo = async (query) => {
         const encodedQuery = encodeURIComponent(query);
         console.log(query);
         const { data, status } = await axios.get(
-            `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&q=${encodedQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=2`
+            `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&q=${encodedQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=4`
         );
 
         if (status !== 200 || !data || !data.items || data.items.length === 0) {

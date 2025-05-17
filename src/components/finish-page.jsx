@@ -1,7 +1,8 @@
 'use client';
 import CourseHeader from '@/components/course-layout/course-header'
 import { generateVideo } from '@/lib/generateVideo';
-import { Copy } from 'lucide-react'
+import { Copy, ArrowLeftIcon } from 'lucide-react'
+import Link from 'next/link';
 import React, { useState } from 'react'
 
 function FinishPage({ course }) {
@@ -25,7 +26,18 @@ function FinishPage({ course }) {
 
     return (
         <div className="max-w-6xl w-full h-screen mx-auto px-4 py-8 flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-bold mb-4 text-center">Finish</h1>
+            {/* Back to Home Button */}
+            <div className="w-full mb-6 self-start">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+                >
+                    <ArrowLeftIcon size={18} />
+                    Back to Home
+                </Link>
+            </div>
+
+            <h1 className="text-3xl font-bold mb-6 text-center">Course Finished 🎉</h1>
             <CourseHeader course={course} />
             <section className="mt-2 w-full">
                 <h4 className="text-lg font-medium mb-2">Course URL:</h4>
