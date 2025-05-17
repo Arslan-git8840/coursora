@@ -1,4 +1,4 @@
-import VideoPlayer from "@/components/course-view/VideoPlayer";
+import VideoPlayer from "@/components/course-view/videoPlayer";
 import { Clock, BookOpen } from "lucide-react";
 
 
