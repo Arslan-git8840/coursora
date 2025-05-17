@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
-import Sidebar from "@/components/course-view/SIdeBar";
-import ChapterContent from "@/components/course-view/ChapterContent";
+import Sidebar from "@/components/course-view/sidebar";
+import ChapterContent from "@/components/course-view/chapterContent";
 import { Button } from "../ui/button";
 
 const CourseView = ({ chapterList }) => {
